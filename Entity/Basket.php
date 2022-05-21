@@ -1,20 +1,30 @@
 <?php
 
 class Basket {
-    public function addToBasket()
+    private $products = [];
+
+    public function addToBasket(BasketProduct $basketProduct)
     {
 
     }
+
     public function removeFromBasket()
     {
 
     }
-    public function totalPrice()
+    public function totalPrice() : int
     {
+        $totalPrice = 0;
+        foreach($this->products as $product) {
+            $totalPrice =+ $product->netPrice();
+        }
 
+        return $totalPrice;
     }
-    public function items()
-    {
 
+    public function items() : array
+    {
+        // todo
+        return $this->products;
     }
 }
