@@ -12,20 +12,15 @@ class Basket {
     }
 
 
-    public function addToBasket(int $productId): void
+    public function addToBasket(BasketProduct $basketProduct): void
     {
-        /*
-        * find product from database if there is no product add to errors array
-        * $product = $productRepository->findById($productId)
-        */
-
         if($this->inBasket($productId)){
            $this->errors[] = "Duplicate productId : ".$productId;
 
            return;
         }
 
-        $basketProducts[] = $this->makeBasketProduct($product, $quantity, $batchDiscount);
+        $basketProducts[] = $basketProduct;
     }
 
     public function removeFromBasket(int $productId): void
@@ -48,7 +43,7 @@ class Basket {
     {
         $totalPrice = 0;
         foreach($this->basketProducts as $basketProduct) {
-            $totalPrice =+ $product->netPrice();
+            $totalPrice =+ $basketProduct->netPrice();
         }
 
         return $totalPrice;
@@ -74,10 +69,5 @@ class Basket {
         }
 
         return false;
-    }
-
-    private function makeBasketProduct(Product $product, int $quantity, int $batchDiscount): BasketProduct
-    {
-        return BasketProduct::fromProduct($product, $quantity, $batchDiscount);
     }
 }
